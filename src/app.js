@@ -22,10 +22,9 @@ app.use(logRequests)
 
 app.get('/update', async (request,response) => {
 
-  const obj = await pipedriveAPI.getAllDeals();
-  console.log(obj);  
+  const obj = await pipedriveAPI.getAllDeals();    
 
-  return response.json(obj.data)
+  return response.json(pipedriveAPI.formatDeals(obj))
 })
 
 module.exports = app;

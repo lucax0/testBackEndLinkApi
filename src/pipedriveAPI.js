@@ -15,14 +15,16 @@ module.exports = {
   },
 
   formatDeals: function(allDealsData) {
-    allDealsData.data.map((deal) => {
-      console.log('DEAL:',deal.title)
-      console.log('DEAL WON:' , deal.won_time);
-      
+    allDealsData.data.map((data) => {
+      const {title: prod, won_time : data_won, value: valor_prod} = data;
+      console.log('DEAL:',{
+        'p': prod,
+        'dt_w' : data_won,
+        'valor_prod' : valor_prod
+      });
     })
     //filtrando as deals para o formato em que eu quero
     return allDealsData.data
   }
-
  
 }

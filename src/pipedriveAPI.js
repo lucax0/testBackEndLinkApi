@@ -9,22 +9,31 @@ module.exports = {
     return new Promise((resolve, reject) => {
       // Filtrando os ganhos direto na api
       resolve(fetch(`${apiUrl}deals?status=won&start=o&api_token=${apiToken}`)
-      .then(res => res.json()) // expecting a json response
-      .then(json => json))
+        .then(res => res.json())
+        .then(json => json))
     })
   },
 
-  formatDeals: function(allDealsData) {
+  formatDeals: function (allDealsData) {
+    const dealsFormated = [];
+    // Ordenando as deals
     allDealsData.data.map((data) => {
-      const {title: prod, won_time : data_won, value: valor_prod} = data;
-      console.log('DEAL:',{
-        'p': prod,
-        'dt_w' : data_won,
-        'valor_prod' : valor_prod
-      });
+      let deal = {}
+      // desestrutruracao de obj
+      const { id: id ,title: product, won_time: data_won, value: value_prod, person_name: person_name } = data;
+
+      deal = Object.assign(deal, { id,product, data_won, value_prod, person_name })
+
+      // console.log('DEAL:', {
+      //   'p': product,
+      //   'dt_w': data_won,
+      //   'valor_prod': value_prod,
+      //   'nome_cliente': person_name
+      // });
+
+      dealsFormated.push(deal)
     })
-    //filtrando as deals para o formato em que eu quero
-    return allDealsData.data
+    return dealsFormated
   }
- 
+
 }

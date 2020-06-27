@@ -2,6 +2,7 @@
 //TESTE BACKEND LINKAPI
 const express = require('express');
 const pipedriveAPI = require('./pipedriveAPI')
+const blingAPI = require('./blingApi')
 const { request, response } = require('express');
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.json());
 function logRequests(request, response, next) {
   const { method, url } = request;
 
-  const log = `[${method}] ${url}`; 
+  const log = `[${method}] ${url}`;//template string
 
   console.time(log);
   next();
@@ -20,11 +21,13 @@ function logRequests(request, response, next) {
 
 app.use(logRequests)
 
-app.get('/update', async (request,response) => {
+app.get('/update', async (request, response) => {
 
-  const obj = await pipedriveAPI.getAllDeals();    
+  const obj = await pipedriveAPI.getAllDeals();
 
-  return response.json(pipedriveAPI.formatDeals(obj))
+  const returnBling = await blingAPI.postAllSales(obj);
+
+  return response.json(returnBling)
 })
 
 module.exports = app;

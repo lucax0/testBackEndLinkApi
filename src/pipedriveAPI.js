@@ -8,7 +8,8 @@ module.exports = {
   getAllDeals: async function () {
     return new Promise((resolve, reject) => {
       // DOC PROMISE  https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise
-      // Filtrando os ganhos direto na api
+      // Filtrando os ganhos direto na api     
+
       resolve(fetch(`${apiUrl}deals?status=won&start=o&api_token=${apiKey}`)
         .then(res => res.json())
         .then(json => this.formatDeals(json)))
@@ -22,9 +23,9 @@ module.exports = {
     allDealsData.data.map((data) => {
       let deal = {}
       // desestrutruracao de obj
-      const { id: id, title: product, won_time: data_won, value: value_prod, person_name: person_name } = data;
+      const { id: codigo, title: descricao, won_time: data_won, value: vlr_unit, person_name: nome } = data;
 
-      deal = Object.assign(deal, { id, product, data_won, value_prod, person_name })
+      deal = Object.assign(deal, { codigo, descricao, data_won, vlr_unit, nome })
 
       dealsFormated.push(deal)
     })

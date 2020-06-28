@@ -13,7 +13,7 @@ module.exports = {
     const dataDeal = data
 
     const builderXml = new xml2js.Builder()
-    
+
     for (let i = 0; i < dataDeal.length; i++) { // clinetes com status ganhos ja estao filtrados direto da api via query param
 
       const xmlDeal = builderXml.buildObject(

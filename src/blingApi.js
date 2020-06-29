@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const xml2js = require('xml2js');//https://www.npmjs.com/package/xml2js
+const mongoDB = require('./mongoDB')
 
 const apiKey = '166d99cfa0fb8e4b6bf12c53a27ee3cd7b73de79600b482534472904fa00692e0d256788'
 const apiUrl = 'https://bling.com.br/Api/v2/pedido/json/'
@@ -38,8 +39,9 @@ module.exports = {
         resolve(fetch(`${apiUrl}?apikey=${apiKey}&xml=${xmlDeal}`, { method: 'POST' })
           .then(res => res.json())
           .then(json => {
-            json.retorno.pedidos ? returnPost = Object.assign(returnPost, json.retorno.pedidos) :
-              returnPost = Object.assign(returnPost, json.retorno.erros)
+            json.retorno.pedidos ? mongoDB.saveDB(dataDeal[i]):
+              console.log({'err': 'Produto ja cadastrado ou invalido'});
+              
           })
           .then(results.push(returnPost))
         )

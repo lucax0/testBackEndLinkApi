@@ -1,18 +1,35 @@
-const MongoClient = require('mongodb').MongoClient;
-const psswrd = euJnyqqp00j5bzBç
-const uri = `mongodb+srv://apiTest:${psswrd}@cluster0-fcpmn.gcp.mongodb.net/apiLink?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const mongojs = require('mongojs')
 
+// https://openbase.io/js/mongojs
+// https://www.npmjs.com/package/mongojs
+const psswrd = '743xBtWtHSFLtSCC'
+const uri = `mongodb+srv://apiTest:${psswrd}@cluster0-fcpmn.gcp.mongodb.net/apiLink?authMechanism=SCRAM-SHA-1`;
+
+const db = mongojs(uri, ['savedDeals'])
+
+db.on('error', function (err) {
+  console.log('database error', err)
+})
+
+db.on('connect', function () {
+  console.log('database connected')
+})
 
 module.exports = {
-  connectDB: async function () {
-    await client.connect(err => {
-      const collection = client.db("apiLink").collection("savedDeals");
-      // perform actions on the collection object 
-      console.log(collection) 
-      // console.log('Connect',client)
+  findAllDB: async function () {
+    db.savedDeals.find(function (err, docs) {
+      return new Promise((resolve, reject) => {
+        console.log('Consolidando DB...')
+        resolve(docs);
+      })
+    })
+  },
 
-      client.close();
-    });
+  saveDB: async function (dataDeal) {
+    return new Promise((resolve, reject) => {
+      console.log('saving on DB')
+      resolve(db.savedDeals.save(dataDeal))
+    })
+
   }
 }

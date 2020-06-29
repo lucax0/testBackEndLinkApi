@@ -3,7 +3,7 @@
 const express = require('express');
 const pipedriveAPI = require('./pipedriveAPI')
 const blingAPI = require('./blingApi')
-const mongoDB = require('./mongoDB')
+
 const { request, response } = require('express');
 
 const app = express();
@@ -24,12 +24,12 @@ app.use(logRequests)
 
 app.get('/update', async (request, response) => {
 
-  // const obj = await pipedriveAPI.getAllDeals();
+  const obj = await pipedriveAPI.getAllDeals();
 
-  // const returnBling = await blingAPI.postAllSales(obj);
-  // return response.json(returnBling)
-  mongoDB.connectDB();
-  return response.json(mongoDB.connect)
+  const returnBling = await blingAPI.postAllSales(obj);
+  return response.json(returnBling)
+  // const findAllDB = await mongoDB.findAllDB();
+  return response.json({ findAllDB })
 })
 
 module.exports = app;

@@ -3,6 +3,7 @@
 const express = require('express');
 const pipedriveAPI = require('./pipedriveAPI')
 const blingAPI = require('./blingApi')
+const mongoDB = require('./mongoDB')
 
 const { request, response } = require('express');
 
@@ -22,14 +23,26 @@ function logRequests(request, response, next) {
 
 app.use(logRequests)
 
-app.get('/update', async (request, response) => {
 
-  const obj = await pipedriveAPI.getAllDeals();
+async function apiStart() {
+  try {
+    //Script de inicio da api, consultar pipedrive jogar no bling e add no mongodb todas as propostas nao repetidas
+    const obj = await pipedriveAPI.getAllDeals();
 
-  const returnBling = await blingAPI.postAllSales(obj);
-  return response.json(returnBling)
-  // const findAllDB = await mongoDB.findAllDB();
-  return response.json({ findAllDB })
+    const returnBling = await blingAPI.postAllSales(obj);
+  } catch (error) {
+    console.log(error);
+    return response.status(400).json({ "error": error });
+  }
+};
+
+apiStart();
+
+app.get('/dealsReport', async (request, response) => {
+  const findAllDB = await mongoDB.findAllDB();
+
+  return response.json(await mongoDB.filterDB(findAllDB))
+
 })
 
 module.exports = app;

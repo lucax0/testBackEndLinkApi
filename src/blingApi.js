@@ -15,7 +15,7 @@ module.exports = {
 
     const builderXml = new xml2js.Builder()
 
-    for (let i = 0; i < dataDeal.length; i++) { // clinetes com status ganhos ja estao filtrados direto da api via query param
+    for (let i = 0; i < dataDeal.length; i++) { // clientes com status ganhos ja estao filtrados direto da api via query param
 
       const xmlDeal = builderXml.buildObject(
         {
@@ -39,9 +39,8 @@ module.exports = {
         resolve(fetch(`${apiUrl}?apikey=${apiKey}&xml=${xmlDeal}`, { method: 'POST' })
           .then(res => res.json())
           .then(json => {
-            json.retorno.pedidos ? mongoDB.saveDB(dataDeal[i]):
-              console.log({'err': 'Produto ja cadastrado ou invalido'});
-              
+            json.retorno.pedidos ? mongoDB.saveDB(dataDeal[i].data_won.split(' ')[0], dataDeal[i].vlr_unit, dataDeal[i].descricao) :
+              console.log({ 'err': 'Produto ja cadastrado ou invalido' });
           })
           .then(results.push(returnPost))
         )

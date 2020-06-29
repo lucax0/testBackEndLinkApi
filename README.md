@@ -19,33 +19,3 @@ REQUISITOS
 ● Criar uma collection no banco de dados MongoDB agregando as oportunidades inseridas no Bling por dia e valor total.
 
 ● Criar endpoint para trazer os dados consolidados da collection do MongoDB.
-
-
-
-INSTRUÇÕES
-
-● Desenvolva e versione o projeto usando git
-
-● Utilize o GitHub para hospedar o código
-
-● Enviar o link do repositório para people@linkapi.com.br
-
-
-
-O QUE SERÁ AVALIADO
-
-● Quantidade de requisitos realizados
-
-● Desacoplamento de código
-
-● Legibilidade
-
-● Boas práticas de desenvolvimento de API RESTful
-
-● Performance
-
-
-
-Qualquer dúvida pode nos contactar pela Gupy ou Whatsapp.
-
-Boa sorte!! ☺
